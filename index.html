@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="EQUILÍBRIO: entenda o impacto das suas escolhas e compare alternativas com clareza."
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>EQUILÍBRIO</title>
+    <meta name="theme-color" content="#1f3b2e" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">E</div>
+          <div>
+            <p class="eyebrow">MVP</p>
+            <h1>EQUILÍBRIO</h1>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Navegação principal">
+          <button class="nav-button active" data-target="landing">Início</button>
+          <button class="nav-button" data-target="dashboard">Dashboard</button>
+          <button class="nav-button" data-target="analysis">Analisar</button>
+          <button class="nav-button" data-target="compare">Comparar</button>
+          <button class="nav-button" data-target="history">Histórico</button>
+          <button class="nav-button" data-target="profile">Perfil</button>
+        </nav>
+
+        <div class="header-actions">
+          <button id="loginBtn" class="secondary-btn">Entrar</button>
+          <button id="logoutBtn" class="ghost-btn hidden">Sair</button>
+        </div>
+      </header>
+
+      <main class="page-shell">
+        <section id="landing" class="page active">
+          <div class="hero">
+            <div class="hero-copy">
+              <span class="tag">Você não precisa consumir perfeitamente.</span>
+              <h2>Você sabe quanto custa de verdade aquilo que compra?</h2>
+              <p>
+                Descubra o impacto ambiental e social das suas escolhas e encontre alternativas que façam sentido para você.
+              </p>
+              <div class="cta-row">
+                <button class="primary-btn" data-nav="analysis">Analisar um produto</button>
+                <button class="secondary-btn" data-nav="dashboard">Como funciona</button>
+              </div>
+              <div class="flow-grid">
+                <span>1. ESCANEIE</span>
+                <span>2. ENTENDA</span>
+                <span>3. COMPARE</span>
+                <span>4. DECIDA</span>
+              </div>
+              <p class="muted">
+                O objetivo não é consumir menos a qualquer custo. É consumir melhor, entendendo os trade-offs.
+              </p>
+            </div>
+            <div class="hero-panel">
+              <div class="score-panel">
+                <p class="label">Equilíbrio médio</p>
+                <div class="big-score">78</div>
+                <div class="mini-bar"><span style="width: 78%"></span></div>
+                <ul>
+                  <li>Impacto: 72</li>
+                  <li>Durabilidade: 82</li>
+                  <li>Confiança: 81</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="dashboard" class="page">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Painel</p>
+              <h2>Dashboard</h2>
+            </div>
+            <button class="primary-btn" data-nav="analysis">+ Analisar produto</button>
+          </div>
+
+          <div id="dashboardContent" class="card-grid"></div>
+        </section>
+
+        <section id="analysis" class="page">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Busca</p>
+              <h2>Analise um produto</h2>
+            </div>
+          </div>
+
+          <div class="search-panel card">
+            <form id="searchForm" class="search-form">
+              <label for="productSearch" class="sr-only">Digite o nome do produto</label>
+              <input id="productSearch" type="search" placeholder="Digite o nome do produto..." />
+              <button type="submit" class="primary-btn">Buscar</button>
+            </form>
+          </div>
+
+          <div id="searchResults" class="results-grid"></div>
+          <div id="productDetail" class="product-detail"></div>
+        </section>
+
+        <section id="compare" class="page">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Comparação</p>
+              <h2>Compare opções</h2>
+            </div>
+          </div>
+          <div id="compareContent" class="compare-wrapper"></div>
+        </section>
+
+        <section id="history" class="page">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Meu consumo</p>
+              <h2>Histórico</h2>
+            </div>
+          </div>
+
+          <div id="historyContent" class="history-wrapper"></div>
+        </section>
+
+        <section id="profile" class="page">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Configuração</p>
+              <h2>Meu perfil</h2>
+            </div>
+          </div>
+          <div id="profileContent"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="authModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-card">
+        <button class="close-modal" aria-label="Fechar modal">×</button>
+        <h3>Entrar na plataforma</h3>
+        <form id="authForm" class="auth-form">
+          <div class="field">
+            <label for="nameInput">Nome</label>
+            <input id="nameInput" name="name" type="text" placeholder="Seu nome" />
+          </div>
+          <div class="field">
+            <label for="emailInput">E-mail</label>
+            <input id="emailInput" name="email" type="email" placeholder="seu@email.com" required />
+          </div>
+          <div class="field">
+            <label for="passwordInput">Senha</label>
+            <input id="passwordInput" name="password" type="password" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="primary-btn full-width">Entrar</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
