@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (import.meta.env.PROD && 'serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload(), { once: true });
-    navigator.serviceWorker.register('/service-worker.js').catch(() => undefined);
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}service-worker.js`).catch(() => undefined);
   } else if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
       if (registrations.length > 0) {

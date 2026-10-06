@@ -1,5 +1,6 @@
 const CACHE_NAME = 'ecoquiz-v4';
-const APP_SHELL = ['/', '/index.html', '/manifest.json', '/icon.svg'];
+const APP_SHELL = ['./', 'index.html', 'manifest.json', 'icon.svg']
+  .map((path) => new URL(path, self.registration.scope).href);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

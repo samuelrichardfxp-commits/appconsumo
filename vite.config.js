@@ -32,6 +32,7 @@ const shareAddressPlugin = {
 
 export default defineConfig({
   plugins: [shareAddressPlugin],
+  base: process.env.GITHUB_ACTIONS ? '/appconsumo/' : '/',
   server: {
     host: '0.0.0.0',
     port: 5173,

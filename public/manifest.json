@@ -2,7 +2,8 @@
   "name": "EcoQuiz — Sustentabilidade vs. Consumo",
   "short_name": "EcoQuiz",
   "description": "Aprenda sobre sustentabilidade jogando o EcoQuiz.",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f4f4ed",
   "theme_color": "#173b2d",
@@ -10,7 +11,7 @@
   "lang": "pt-BR",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "./icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
