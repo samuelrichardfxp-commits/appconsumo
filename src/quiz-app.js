@@ -1,4 +1,5 @@
 import { PHASES, QUESTIONS } from './data/questions.js';
+import QRCode from 'qrcode';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
@@ -28,6 +29,11 @@ export class App {
     this.answerNudge = document.getElementById('answerNudge');
     this.nextButton = document.getElementById('nextButton');
     this.reviewTableBody = document.getElementById('reviewTableBody');
+    this.shareDialog = document.getElementById('shareDialog');
+    this.shareQr = document.getElementById('shareQr');
+    this.shareStatus = document.getElementById('shareStatus');
+    this.shareUrlNode = document.getElementById('shareUrl');
+    this.copyShareButton = document.getElementById('copyShareUrl');
   }
 
   bindEvents() {
@@ -51,7 +57,13 @@ export class App {
   }
 
   handleAction(action) {
-    if (action === 'start' || action === 'restart') {
+    if (action === 'open-share') {
+      this.openShareDialog();
+    } else if (action === 'close-share') {
+      this.shareDialog.close();
+    } else if (action === 'copy-share') {
+      this.copyShareUrl();
+    } else if (action === 'start' || action === 'restart') {
       this.startGame();
     } else if (action === 'next') {
       this.nextQuestion();
@@ -63,6 +75,70 @@ export class App {
     } else if (action === 'home') {
       this.showScreen('welcome');
     }
+  }
+
+  async resolveShareUrl() {
+    const url = new URL(window.location.href);
+    url.hash = '';
+
+    if (['localhost', '127.0.0.1', '::1', '[::1]'].includes(url.hostname)) {
+      try {
+        const response = await fetch('/__ecoquiz/share-address', { cache: 'no-store' });
+        if (response.ok) {
+          const { address } = await response.json();
+          if (address) url.hostname = address;
+        }
+      } catch {
+        return url.toString();
+      }
+    }
+
+    return url.toString();
+  }
+
+  async openShareDialog() {
+    this.shareDialog.showModal();
+    this.shareStatus.textContent = 'Preparando acesso…';
+    this.shareUrlNode.textContent = '';
+    this.copyShareButton.disabled = true;
+
+    try {
+      const shareUrl = await this.resolveShareUrl();
+      await QRCode.toCanvas(this.shareQr, shareUrl, {
+        errorCorrectionLevel: 'M',
+        width: 240,
+        margin: 2,
+        color: { dark: '#173b2d', light: '#ffffff' },
+      });
+      this.shareUrlNode.textContent = shareUrl;
+      this.shareStatus.textContent = 'Aponte a câmera do celular para o código.';
+      this.copyShareButton.disabled = false;
+      this.currentShareUrl = shareUrl;
+    } catch {
+      this.shareStatus.textContent = 'Não foi possível criar o código. Confira a conexão e tente novamente.';
+    }
+  }
+
+  async copyShareUrl() {
+    if (!this.currentShareUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(this.currentShareUrl);
+    } catch {
+      const input = document.createElement('textarea');
+      input.value = this.currentShareUrl;
+      input.style.position = 'fixed';
+      input.style.opacity = '0';
+      document.body.append(input);
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+    }
+
+    this.copyShareButton.textContent = 'Link copiado!';
+    window.setTimeout(() => {
+      this.copyShareButton.textContent = 'Copiar link';
+    }, 1800);
   }
 
   showScreen(screenName) {

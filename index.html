@@ -16,8 +16,26 @@
           <span class="brand-symbol" aria-hidden="true">♻</span>
           <span>Eco<span>Quiz</span></span>
         </a>
-        <div class="header-note"><span class="online-dot"></span> Jogo educativo • 5 fases</div>
+        <div class="header-actions">
+          <div class="header-note"><span class="online-dot"></span> Jogo educativo • 5 fases</div>
+          <button class="share-button" type="button" data-action="open-share">
+            <span aria-hidden="true">▦</span> Acessar pelo celular
+          </button>
+        </div>
       </header>
+
+      <dialog id="shareDialog" class="share-dialog" aria-labelledby="shareTitle">
+        <button class="dialog-close" type="button" data-action="close-share" aria-label="Fechar">×</button>
+        <p class="share-kicker">CONTINUE EM OUTRA TELA</p>
+        <h2 id="shareTitle">Acesse pelo celular</h2>
+        <p class="share-instructions">Conecte o celular à mesma rede Wi-Fi e escaneie este código para abrir o EcoQuiz.</p>
+        <div class="qr-frame">
+          <canvas id="shareQr" width="240" height="240" aria-label="QR Code para abrir o EcoQuiz"></canvas>
+          <p id="shareStatus" class="share-status" aria-live="polite">Preparando acesso…</p>
+        </div>
+        <p id="shareUrl" class="share-url"></p>
+        <button id="copyShareUrl" class="button button-dark share-copy" type="button" data-action="copy-share">Copiar link</button>
+      </dialog>
 
       <main>
         <section class="screen welcome-screen is-active" data-screen="welcome" id="inicio">
