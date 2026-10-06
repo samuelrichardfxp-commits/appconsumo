@@ -3,170 +3,151 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="EQUILÍBRIO: entenda o impacto das suas escolhas e compare alternativas com clareza."
-    />
+    <meta name="description" content="Aprenda sobre sustentabilidade jogando o EcoQuiz." />
+    <meta name="theme-color" content="#173b2d" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css" />
-    <title>EQUILÍBRIO</title>
-    <meta name="theme-color" content="#1f3b2e" />
+    <title>EcoQuiz — Sustentabilidade vs. Consumo</title>
   </head>
   <body>
     <div id="app">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div class="brand-mark">E</div>
-          <div>
-            <p class="eyebrow">MVP</p>
-            <h1>EQUILÍBRIO</h1>
-          </div>
-        </div>
-
-        <nav class="nav" aria-label="Navegação principal">
-          <button class="nav-button active" data-target="landing">Início</button>
-          <button class="nav-button" data-target="dashboard">Dashboard</button>
-          <button class="nav-button" data-target="analysis">Analisar</button>
-          <button class="nav-button" data-target="compare">Comparar</button>
-          <button class="nav-button" data-target="history">Histórico</button>
-          <button class="nav-button" data-target="profile">Perfil</button>
-        </nav>
-
-        <div class="header-actions">
-          <button id="loginBtn" class="secondary-btn">Entrar</button>
-          <button id="logoutBtn" class="ghost-btn hidden">Sair</button>
-        </div>
+      <header class="site-header">
+        <a class="brand" href="#inicio" aria-label="EcoQuiz, início" data-screen-target="welcome">
+          <span class="brand-symbol" aria-hidden="true">♻</span>
+          <span>Eco<span>Quiz</span></span>
+        </a>
+        <div class="header-note"><span class="online-dot"></span> Jogo educativo • 5 fases</div>
       </header>
 
-      <main class="page-shell">
-        <section id="landing" class="page active">
-          <div class="hero">
-            <div class="hero-copy">
-              <span class="tag">Você não precisa consumir perfeitamente.</span>
-              <h2>Você sabe quanto custa de verdade aquilo que compra?</h2>
-              <p>
-                Descubra o impacto ambiental e social das suas escolhas e encontre alternativas que façam sentido para você.
+      <main>
+        <section class="screen welcome-screen is-active" data-screen="welcome" id="inicio">
+          <div class="welcome-hero">
+            <img
+              class="hero-image"
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=85"
+              alt="Luz do sol atravessando uma floresta verde"
+            />
+            <div class="hero-shade"></div>
+            <div class="hero-content">
+              <p class="hero-kicker"><span>✳</span> Um desafio pelo planeta</p>
+              <h1>Sustentabilidade<br /><em>vs. Consumo</em></h1>
+              <p class="hero-description">
+                Aprenda enquanto joga. Responda, descubra e leve escolhas mais conscientes para a vida real.
               </p>
-              <div class="cta-row">
-                <button class="primary-btn" data-nav="analysis">Analisar um produto</button>
-                <button class="secondary-btn" data-nav="dashboard">Como funciona</button>
+              <button class="button button-lime button-large" type="button" data-action="start">
+                Começar Quiz <span aria-hidden="true">→</span>
+              </button>
+              <div class="hero-footnote"><span aria-hidden="true">🌱</span> 20 perguntas · 5 fases · 1 planeta</div>
+            </div>
+            <div class="hero-stamp" aria-hidden="true"><span>PEQUENAS<br />ESCOLHAS,<br /><strong>GRANDE<br />IMPACTO</strong></span></div>
+          </div>
+
+          <div class="welcome-details">
+            <div class="welcome-intro">
+              <span class="section-index">01 / JOGUE E APRENDA</span>
+              <h2>Conhecimento que<br />vira atitude.</h2>
+            </div>
+            <div class="phase-preview" aria-label="Fases do jogo">
+              <div><span>01</span><strong>Consumo consciente</strong><i>🛍️</i></div>
+              <div><span>02</span><strong>Reciclagem</strong><i>♻️</i></div>
+              <div><span>03</span><strong>Meio ambiente</strong><i>🌎</i></div>
+              <div><span>04</span><strong>Lixo eletrônico</strong><i>🔋</i></div>
+              <div><span>05</span><strong>Desafio final</strong><i>⚡</i></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen game-screen" data-screen="game" aria-labelledby="questionText">
+          <div class="game-topline">
+            <button class="text-button" type="button" data-action="home">← Início</button>
+            <div class="score-display"><span aria-hidden="true">✦</span> <strong id="scoreValue">0</strong><small>pontos</small></div>
+          </div>
+
+          <div class="game-layout">
+            <aside class="phase-rail" aria-label="Fases do quiz">
+              <span class="section-index">SUA JORNADA</span>
+              <ol id="phaseList" class="phase-list"></ol>
+              <div class="rail-tip"><span aria-hidden="true">🌿</span><p>Cada resposta é uma chance de fazer diferente.</p></div>
+            </aside>
+
+            <div class="question-area">
+              <div class="question-meta">
+                <span id="phaseLabel" class="phase-label"></span>
+                <span id="questionCount" class="question-count">Pergunta 1 de 20</span>
               </div>
-              <div class="flow-grid">
-                <span>1. ESCANEIE</span>
-                <span>2. ENTENDA</span>
-                <span>3. COMPARE</span>
-                <span>4. DECIDA</span>
+              <div class="progress-track" role="progressbar" aria-label="Progresso do quiz" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
+                <span id="progressFill"></span>
               </div>
-              <p class="muted">
-                O objetivo não é consumir menos a qualquer custo. É consumir melhor, entendendo os trade-offs.
-              </p>
+
+              <div class="question-card">
+                <span class="question-ornament" aria-hidden="true">?</span>
+                <p class="question-topic" id="questionTopic"></p>
+                <h1 id="questionText"></h1>
+                <div id="answerOptions" class="answer-options"></div>
+                <div id="answerFeedback" class="answer-feedback" aria-live="polite" hidden></div>
+                <div class="question-actions">
+                  <span id="answerNudge" class="answer-nudge">Escolha uma alternativa para continuar</span>
+                  <button id="nextButton" class="button button-dark" type="button" data-action="next" hidden>
+                    Próxima pergunta <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+              <div class="game-bottom-note"><span>💡</span> Dica: pense no ciclo completo de cada produto, da produção ao descarte.</div>
             </div>
-            <div class="hero-panel">
-              <div class="score-panel">
-                <p class="label">Equilíbrio médio</p>
-                <div class="big-score">78</div>
-                <div class="mini-bar"><span style="width: 78%"></span></div>
-                <ul>
-                  <li>Impacto: 72</li>
-                  <li>Durabilidade: 82</li>
-                  <li>Confiança: 81</li>
-                </ul>
+          </div>
+        </section>
+
+        <section class="screen result-screen" data-screen="result" aria-labelledby="resultTitle">
+          <div class="result-heading">
+            <p class="section-index">FIM DE JOGO · BOA JORNADA!</p>
+            <span class="result-planet" aria-hidden="true">🌎</span>
+            <h1 id="resultTitle">Quiz concluído!</h1>
+            <p>Todo conhecimento é um passo para um futuro mais sustentável.</p>
+          </div>
+          <div class="result-content">
+            <div class="result-score-panel">
+              <span class="result-leaf" aria-hidden="true">✳</span>
+              <span class="section-index">SUA PONTUAÇÃO</span>
+              <strong id="finalScore" class="final-score">0</strong>
+              <span class="score-caption">pontos</span>
+              <div class="result-rank" id="playerRank"></div>
+            </div>
+            <div class="result-stats">
+              <div class="stat-row"><span>✅ Respostas corretas</span><strong id="correctCount">0</strong></div>
+              <div class="stat-row"><span>❌ Respostas erradas</span><strong id="wrongCount">0</strong></div>
+              <div class="stat-row"><span>🎯 Aproveitamento</span><strong id="accuracyValue">0%</strong></div>
+              <div class="result-actions">
+                <button class="button button-dark" type="button" data-action="review">Ver respostas <span aria-hidden="true">→</span></button>
+                <button class="button button-outline" type="button" data-action="restart">Jogar novamente</button>
               </div>
             </div>
           </div>
+          <p class="result-footnote">O planeta agradece cada escolha informada. Continue curioso! 🌱</p>
         </section>
 
-        <section id="dashboard" class="page">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Painel</p>
-              <h2>Dashboard</h2>
-            </div>
-            <button class="primary-btn" data-nav="analysis">+ Analisar produto</button>
+        <section class="screen review-screen" data-screen="review" aria-labelledby="reviewTitle">
+          <div class="review-heading">
+            <button class="text-button" type="button" data-action="back-results">← Resultado</button>
+            <p class="section-index">SEU GABARITO</p>
+            <h1 id="reviewTitle">Tabela de respostas</h1>
+            <p>Confira o que você marcou e relembre as respostas corretas.</p>
           </div>
-
-          <div id="dashboardContent" class="card-grid"></div>
-        </section>
-
-        <section id="analysis" class="page">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Busca</p>
-              <h2>Analise um produto</h2>
-            </div>
+          <div class="review-table-wrap">
+            <table class="review-table">
+              <thead>
+                <tr><th scope="col">#</th><th scope="col">Pergunta</th><th scope="col">Sua resposta</th><th scope="col">Resposta correta</th><th scope="col">Resultado</th></tr>
+              </thead>
+              <tbody id="reviewTableBody"></tbody>
+            </table>
           </div>
-
-          <div class="search-panel card">
-            <form id="searchForm" class="search-form">
-              <label for="productSearch" class="sr-only">Digite o nome do produto</label>
-              <input id="productSearch" type="search" placeholder="Digite o nome do produto..." />
-              <button type="submit" class="primary-btn">Buscar</button>
-            </form>
+          <div class="review-actions">
+            <button class="button button-dark" type="button" data-action="restart">Jogar novamente <span aria-hidden="true">↻</span></button>
           </div>
-
-          <div id="searchResults" class="results-grid"></div>
-          <div id="productDetail" class="product-detail"></div>
-        </section>
-
-        <section id="compare" class="page">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Comparação</p>
-              <h2>Compare opções</h2>
-            </div>
-          </div>
-          <div id="compareContent" class="compare-wrapper"></div>
-        </section>
-
-        <section id="history" class="page">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Meu consumo</p>
-              <h2>Histórico</h2>
-            </div>
-          </div>
-
-          <div id="historyContent" class="history-wrapper"></div>
-        </section>
-
-        <section id="profile" class="page">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Configuração</p>
-              <h2>Meu perfil</h2>
-            </div>
-          </div>
-          <div id="profileContent"></div>
         </section>
       </main>
+
+      <footer class="site-footer"><span>EcoQuiz</span><span>Aprender também é uma atitude sustentável.</span><span>🌿</span></footer>
     </div>
-
-    <div id="authModal" class="modal hidden" aria-hidden="true">
-      <div class="modal-card">
-        <button class="close-modal" aria-label="Fechar modal">×</button>
-        <h3>Entrar na plataforma</h3>
-        <form id="authForm" class="auth-form">
-          <div class="field">
-            <label for="nameInput">Nome</label>
-            <input id="nameInput" name="name" type="text" placeholder="Seu nome" />
-          </div>
-          <div class="field">
-            <label for="emailInput">E-mail</label>
-            <input id="emailInput" name="email" type="email" placeholder="seu@email.com" required />
-          </div>
-          <div class="field">
-            <label for="passwordInput">Senha</label>
-            <input id="passwordInput" name="password" type="password" placeholder="••••••••" required />
-          </div>
-          <button type="submit" class="primary-btn full-width">Entrar</button>
-        </form>
-      </div>
-    </div>
-
-    <div id="toast" class="toast hidden" aria-live="polite"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
